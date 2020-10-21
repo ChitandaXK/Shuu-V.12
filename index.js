@@ -1,5 +1,8 @@
 const discord = require("discord.js");
 const { prefix } = require("./config.json");
+const { readdirSync } = require("fs");
+const { join } = require("path");
+const fs = require('fs');
 const client = new discord.Client({
   disableEveryone: true,
   disableEvents: ["TYPING_START"]
@@ -29,6 +32,20 @@ client.on("ready", async () => {
 client.on("warn", info => console.log(info));
 client.on("error", console.error)
 
+client.commands = new discord.Collection();
+client.aliases = new discord.Collection();
+client.categories = fs.readdirSync("./commands")
+client.prefix = prefix
+client.queue = new Map();
+client.vote = new Map();
+
+
+const cmdFiles = readdirSync(join(__dirname, "commands")).filter(file => file.endsWith(".js"))
+for (const file of cmdFiles) {
+  const command = require(join(__dirname, "commands", file))
+  client.commands.set(command.name, command)
+}
+
 
 client.on("message", message => {
    if (message.author.bot) return null;
@@ -39,10 +56,12 @@ client.on("message", message => {
     const args = message.content.slice(prefix.length).trim().split(/ +/)
     const command = args.shift().toLowerCase();
     
+     if(!client.commands.has(command)) {
+      return;
+    } 
     
     try {
-    const commandsFile = require(`./commands/${command}.js`);
-    commandsFile.run(client, message, args);
+    client.commands.get(command).execute(client, message, args);
   } catch (e) {
     console.log(e.message)
     message.reply("My commnad error (Maintenance)")

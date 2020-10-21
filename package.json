@@ -1,25 +1,28 @@
 {
-  "name": "NamaBot",
+  "name": "your name bot",
   "version": "0.0.1",
-  "description": "Deskripsi Bot",
+  "description": "Description your Bot",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
   },
-  "author": "rayhantech#4999",
+  "author": "Chitanda#2468",
   "dependencies": {
-    "express": "^4.17.1",
     "discord.js": "^12.2.0",
-    "moment": "^2.27.0",
     "snekfetch": "^4.0.4",
     "http": "^0.0.0",
-     "dotenv": "^8.2.0"
+    "express": "^4.17.1",
+    "fs": "^0.0.2",
+    "path": "^0.12.7",
+    "dotenv": "^8.2.0",
+    "moment": "^2.27.0",
+    "weather-js": "^2.0.0",
   },
   "engines": {
     "node": "12.x"
   },
   "repository": {
-    "url": "https://glitch.com/edit/#!/remix/cmd-handler"
+    "url": "https://glitch.com/edit/#!/hello-express"
   },
   "license": "MIT",
   "keywords": [
